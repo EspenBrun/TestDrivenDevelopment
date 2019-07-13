@@ -9,8 +9,9 @@ Hashcode()
 Equal null
 Equal object
 <!-- 5 CHF * 2 = 10 CHF -->
-Dollar/Franc duplication
+<!-- Dollar/Franc duplication -->
 <!-- Common Equals() -->
 Common Times()
 <!-- Compare Dollar to Franc -->
 Currency?
+Delete Franc multiplication tests?
