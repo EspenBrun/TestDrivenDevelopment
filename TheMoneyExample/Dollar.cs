@@ -1,8 +1,10 @@
+using System;
+
 namespace TheMoneyExample
 {
     public class Dollar
     {
-        public readonly int Amount;
+        private readonly int Amount;
 
         public Dollar(int amount)
         {
@@ -14,8 +16,17 @@ namespace TheMoneyExample
             return new Dollar(Amount * multiplier);
         }
 
-        public bool Equals(Dollar other)
+        public override bool Equals(object obj)
         {
+            Dollar other;
+            try
+            {
+                other = (Dollar) obj;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             return Amount == other.Amount;
         }
     }

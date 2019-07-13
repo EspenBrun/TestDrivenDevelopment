@@ -12,7 +12,7 @@ namespace TheMoneyExampleTests
 
             var ten = five.Times(2);
 
-            Assert.Equal(10, ten.Amount);
+            Assert.Equal(new Dollar(10), ten);
         }
 
         [Fact]
@@ -22,8 +22,8 @@ namespace TheMoneyExampleTests
 
             var fifteen = five.Times(3);
 
-            Assert.Equal(5, five.Amount);
-            Assert.Equal(15, fifteen.Amount);
+            Assert.Equal(new Dollar(5), five);
+            Assert.Equal(new Dollar(15), fifteen);
         }
 
         [Fact]
