@@ -2,9 +2,9 @@ using System;
 
 namespace TheMoneyExample
 {
-    public abstract class Money
+    public class Money
     {
-        protected readonly int _amount;
+        private readonly int _amount;
         private readonly string _currency;
 
         protected Money(int amount, string currency)
@@ -35,14 +35,22 @@ namespace TheMoneyExample
             {
                 return false;
             }
-            return _amount == other._amount && obj.GetType() == GetType();
+            return _amount == other._amount && _currency == other._currency;
         }
 
-        public abstract Money Times(int i);
+        public Money Times(int multiplier)
+        {
+            return new Money(_amount * multiplier, _currency);
+        }
 
         public string Currency()
         {
             return _currency;
+        }
+
+        public override string ToString()
+        {
+            return $"{_amount} {_currency}";
         }
     }
 }
