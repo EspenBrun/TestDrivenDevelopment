@@ -38,5 +38,11 @@ namespace TheMoneyExampleTests
         {
             Assert.False(new Dollar(5).Equals(new Dollar(6)));
         }
+
+        [Fact]
+        public void Equals_DollarAndFranc_NotEqual()
+        {
+            Assert.False(new Dollar(5).Equals(new Franc(5)));
+        }
     }
 }

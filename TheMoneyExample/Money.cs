@@ -18,7 +18,7 @@ namespace TheMoneyExample
             {
                 return false;
             }
-            return Amount == other.Amount;
+            return Amount == other.Amount && obj.GetType() == GetType();
         }
     }
 }
