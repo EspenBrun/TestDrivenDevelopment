@@ -10,20 +10,21 @@ namespace TheMoneyExampleTests
         {
             var five = new Dollar(5);
 
-            var ten = five.Times(2);
-
-            Assert.Equal(new Dollar(10), ten);
-        }
-
-        [Fact]
-        public void ImmutableDollar()
-        {
-            var five = new Dollar(5);
-
             var fifteen = five.Times(3);
 
             Assert.Equal(new Dollar(5), five);
             Assert.Equal(new Dollar(15), fifteen);
+        }
+
+        [Fact]
+        public void Multiplication_Franc()
+        {
+            var five = new Franc(5);
+
+            var fifteen = five.Times(3);
+
+            Assert.Equal(new Franc(5), five);
+            Assert.Equal(new Franc(15), fifteen);
         }
 
         [Fact]
