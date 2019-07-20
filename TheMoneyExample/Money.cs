@@ -2,15 +2,15 @@ using System;
 
 namespace TheMoneyExample
 {
-    public class Money
+    public class Money : Expression
     {
-        private readonly int _amount;
-        private readonly string _currency;
+        public string Currency { get; }
+        public int Amount { get; }
 
-        private Money(int amount, string currency)
+        public Money(int amount, string currency)
         {
-            _amount = amount;
-            _currency = currency;
+            Amount = amount;
+            Currency = currency;
         }
 
         public static Money Dollar(int amount)
@@ -21,6 +21,20 @@ namespace TheMoneyExample
         public static Money Franc(int amount)
         {
             return new Money(amount, "CHF");
+        }
+
+        public Money Reduce(string to)
+        {
+            return this;
+        }
+
+        public Expression Plus(Money addend)
+        {
+            return new Sum(this, addend);
+        }
+        public Money Times(int multiplier)
+        {
+            return new Money(Amount * multiplier, Currency);
         }
 
         public override bool Equals(object obj)
@@ -35,27 +49,12 @@ namespace TheMoneyExample
             {
                 return false;
             }
-            return _amount == other._amount && _currency == other._currency;
-        }
-
-        public Money Times(int multiplier)
-        {
-            return new Money(_amount * multiplier, _currency);
-        }
-
-        public string Currency()
-        {
-            return _currency;
+            return Amount == other.Amount && Currency == other.Currency;
         }
 
         public override string ToString()
         {
-            return $"{_amount} {_currency}";
-        }
-
-        public Money Plus(Money addend)
-        {
-            return new Money(_amount + addend._amount, _currency);
+            return $"{Amount} {Currency}";
         }
     }
 }

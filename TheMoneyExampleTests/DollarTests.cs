@@ -23,15 +23,22 @@ namespace TheMoneyExampleTests
         [Fact]
         public void Currencies()
         {
-            Assert.Equal("USD", Money.Dollar(1).Currency());
-            Assert.Equal("CHF", Money.Franc(1).Currency());
+            Assert.Equal("USD", Money.Dollar(1).Currency);
+            Assert.Equal("CHF", Money.Franc(1).Currency);
         }
 
         [Fact]
         public void SimpleAddition()
         {
             var sum = Money.Dollar(5).Plus(Money.Dollar(5));
-            Assert.Equal(Money.Dollar(10), sum);
+            Assert.Equal(Money.Dollar(10), Bank.Reduce(sum, "USD"));
+        }
+
+        [Fact]
+        public void ReduceToSameCurrency()
+        {
+            Assert.Equal(Money.Dollar(5), Bank.Reduce(Money.Dollar(5), "USD"));
+            Assert.Equal(Money.Franc(5), Bank.Reduce(Money.Franc(5), "CHF"));
         }
     }
 }
