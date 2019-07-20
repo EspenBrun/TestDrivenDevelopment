@@ -52,5 +52,10 @@ namespace TheMoneyExample
         {
             return $"{_amount} {_currency}";
         }
+
+        public Money Plus(Money addend)
+        {
+            return new Money(_amount + addend._amount, _currency);
+        }
     }
 }
