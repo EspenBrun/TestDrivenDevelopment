@@ -7,7 +7,7 @@ namespace TheMoneyExample
         private readonly int _amount;
         private readonly string _currency;
 
-        protected Money(int amount, string currency)
+        private Money(int amount, string currency)
         {
             _amount = amount;
             _currency = currency;
@@ -15,12 +15,12 @@ namespace TheMoneyExample
 
         public static Money Dollar(int amount)
         {
-            return new Dollar(amount, "USD");
+            return new Money(amount, "USD");
         }
 
         public static Money Franc(int amount)
         {
-            return new Franc(amount, "CHF");
+            return new Money(amount, "CHF");
         }
 
         public override bool Equals(object obj)
