@@ -1,3 +1,5 @@
+using TheMoneyExampleTests;
+
 namespace TheMoneyExample
 {
     public class Sum : Expression
@@ -11,7 +13,7 @@ namespace TheMoneyExample
             Addend = addend;
         }
 
-        public Money Reduce(string to)
+        public Money Reduce(Bank bank, string to)
         {
             return new Money(Augend.Amount + Addend.Amount, to);
         }

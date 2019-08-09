@@ -3,4 +3,4 @@ $5 + 10 CHF = $10 if rate is 2:1
 <!-- $5 + $5 = $10 -->
 <!-- I would like to postpone the reduction of a Sum, so introduce that class -->
 <!-- Reduce currency to self -->
-Reduce currency to other
+<!-- Reduce currency to other -->

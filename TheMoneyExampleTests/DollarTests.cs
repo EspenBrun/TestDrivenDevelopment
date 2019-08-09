@@ -1,3 +1,4 @@
+using System;
 using TheMoneyExample;
 using Xunit;
 
@@ -30,15 +31,44 @@ namespace TheMoneyExampleTests
         [Fact]
         public void SimpleAddition()
         {
+            var bank = new Bank();
+
             var sum = Money.Dollar(5).Plus(Money.Dollar(5));
-            Assert.Equal(Money.Dollar(10), Bank.Reduce(sum, "USD"));
+            Assert.Equal(Money.Dollar(10), bank.Reduce(sum, "USD"));
         }
 
         [Fact]
         public void ReduceToSameCurrency()
         {
-            Assert.Equal(Money.Dollar(5), Bank.Reduce(Money.Dollar(5), "USD"));
-            Assert.Equal(Money.Franc(5), Bank.Reduce(Money.Franc(5), "CHF"));
+            var bank = new Bank();
+
+            Assert.Equal(Money.Dollar(5), bank.Reduce(Money.Dollar(5), "USD"));
+            Assert.Equal(Money.Franc(5), bank.Reduce(Money.Franc(5), "CHF"));
+        }
+
+        [Fact]
+        public void ReduceToOtherCurrency()
+        {
+            var bank = new Bank();
+            bank.AddRate("CHF", "USD", 2);
+
+            Assert.Equal(Money.Dollar(1), bank.Reduce(Money.Franc(2), "USD"));
+        }
+
+        [Fact]
+        public void BankRateSameCurrency()
+        {
+            var bank = new Bank();
+            Assert.Equal(1, bank.Rate("USD", "USD"));
+        }
+
+        [Fact]
+        public void BankRate()
+        {
+            var bank = new Bank();
+            bank.AddRate("CHF", "USD", 2);
+            var rate = bank.Rate("CHF", "USD");
+            Assert.Equal(2, rate);
         }
     }
 }

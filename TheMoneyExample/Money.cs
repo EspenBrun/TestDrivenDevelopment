@@ -1,4 +1,5 @@
 using System;
+using TheMoneyExampleTests;
 
 namespace TheMoneyExample
 {
@@ -23,9 +24,10 @@ namespace TheMoneyExample
             return new Money(amount, "CHF");
         }
 
-        public Money Reduce(string to)
+        public Money Reduce(Bank bank, string to)
         {
-            return this;
+            var rate = bank.Rate(Currency, to);
+            return new Money(Amount/rate, to);
         }
 
         public Expression Plus(Money addend)
