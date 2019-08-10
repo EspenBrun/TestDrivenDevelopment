@@ -4,10 +4,10 @@ namespace TheMoneyExample
 {
     public class Sum : Expression
     {
-        private readonly Money Augend;
-        private readonly Money Addend;
+        private readonly Expression Augend;
+        private readonly Expression Addend;
 
-        public Sum(Money augend, Money addend)
+        public Sum(Expression augend, Expression addend)
         {
             Augend = augend;
             Addend = addend;
@@ -15,7 +15,14 @@ namespace TheMoneyExample
 
         public Money Reduce(Bank bank, string to)
         {
-            return new Money(Augend.Amount + Addend.Amount, to);
+            var augendAmount = Augend.Reduce(bank, to).Amount;
+            var addendAmount = Addend.Reduce(bank, to).Amount;
+            return new Money(augendAmount + addendAmount, to);
+        }
+
+        public Expression Plus(Expression tenFranc)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

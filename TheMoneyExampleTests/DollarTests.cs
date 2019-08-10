@@ -70,5 +70,19 @@ namespace TheMoneyExampleTests
             var rate = bank.Rate("CHF", "USD");
             Assert.Equal(2, rate);
         }
+
+        [Fact]
+        public void TestMixedAddition()
+        {
+            var fiveDollar = Money.Dollar(5);
+            var tenFranc = Money.Franc(10);
+            var bank = new Bank();
+            bank.AddRate("CHF", "USD", 2);
+
+            var mixedSum = fiveDollar.Plus(tenFranc);
+            var result = bank.Reduce(mixedSum, "USD");
+
+            Assert.Equal(Money.Dollar(10), result);
+        }
     }
 }
