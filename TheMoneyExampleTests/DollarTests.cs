@@ -84,5 +84,33 @@ namespace TheMoneyExampleTests
 
             Assert.Equal(Money.Dollar(10), result);
         }
+
+        [Fact]
+        public void TestSumPlusMoney()
+        {
+            var fiveDollars = new Money(5, "USD");
+            var twentyFranc = new Money(20, "CHF");
+            var bank = new Bank();
+            bank.AddRate("CHF", "USD", 2);
+
+            var sum = new Sum(fiveDollars, twentyFranc).Plus(fiveDollars);
+            var result = bank.Reduce(sum, "USD");
+
+            Assert.Equal(Money.Dollar(20), result);
+        }
+
+        [Fact]
+        public void TestSumTimes()
+        {
+            var fiveDollars = new Money(5, "USD");
+            var tenFranc = new Money(10, "CHF");
+            var bank = new Bank();
+            bank.AddRate("CHF", "USD", 2);
+
+            Expression sum = new Sum(fiveDollars, tenFranc).Times(2);
+            var result = bank.Reduce(sum, "USD");
+
+            Assert.Equal(Money.Dollar(20), result);
+        }
     }
 }

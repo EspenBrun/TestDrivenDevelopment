@@ -20,9 +20,14 @@ namespace TheMoneyExample
             return new Money(augendAmount + addendAmount, to);
         }
 
-        public Expression Plus(Expression tenFranc)
+        public Expression Plus(Expression addend)
         {
-            throw new System.NotImplementedException();
+            return new Sum(this, addend);
+        }
+
+        public Expression Times(int multiplier)
+        {
+            return new Sum(Augend.Times(multiplier), Addend.Times(2));
         }
     }
 }

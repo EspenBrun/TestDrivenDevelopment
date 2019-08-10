@@ -34,6 +34,7 @@ namespace TheMoneyExample
         {
             return new Sum(this, addend);
         }
+
         public Expression Times(int multiplier)
         {
             return new Money(Amount * multiplier, Currency);
