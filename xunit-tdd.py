@@ -5,8 +5,13 @@ class WasRun:
 	def testMethod(self):
 		print("The wasRun object was called. The constructor argument for name was: " + self.name)
 		self.wasRun = 1
+	def run(self):
+		print("The interface to testMethod(), the method run(), was executed")
+		self.testMethod()
 
 test = WasRun("someName")
 print(test.wasRun)
-test.testMethod()
+# test.testMethod()
+# dont want to run the test method directly, use an interface
+test.run()
 print(test.wasRun)
