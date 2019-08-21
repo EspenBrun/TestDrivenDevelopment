@@ -1,8 +1,7 @@
 # Todo
-<!-- $5 + 10 CHF = $10 if rate is 2:1 -->
-<!-- $5 + $5 = $10 -->
-<!-- I would like to postpone the reduction of a Sum, so introduce that class -->
-<!-- Reduce currency to self -->
-<!-- Reduce currency to other -->
-<!-- Sum.Plus() -->
-<!-- Expression.Times() -->
+*Invoke test method*
+Invoke setUp first
+Invoke tearDown afterward
+Invoke tearDown even if the test method fails
+Run multiple tests
+Report collected results
