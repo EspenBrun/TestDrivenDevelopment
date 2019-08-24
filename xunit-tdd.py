@@ -4,24 +4,27 @@ class WasRun:
 		self.wasRun = None
 		self.name = name
 	def testMethod(self):
-		print("The testMethod was called. The constructor argument for name was: " + self.name)
+		print("testMethod() was called, setting wasRun = 1")
 		self.wasRun = 1
 	def run(self):
-		print("The interface to a method in this class was called. I will fail unless you use one of these:")
-		# self.testMethod()
-		# print(self.__doc__)
-		print(dir(self))
+		# This code will attr/method with name 'name'
+		# Fails if we do not have anything named 'name'
+		print("Attempting to find method or attribute named " + self.name)
 		method = getattr(self, self.name)
-		print("got method with name " + self.name)
+		print("Found it: " + self.name + "()")
 		method()
-	def methodA(self):
-		print("method A called")
-	def methodB(self):
-		print("methodB called")
 
-test = WasRun("methodB")
+test = WasRun("testMethod")
+print("### Test start")
+print("")
+print("Checking that test is not run yet. test.wasRun should be None:")
+print("test.wasRun is: ")
 print(test.wasRun)
-# test.testMethod()
-# dont want to run the test method directly, use an interface
+print("")
+print("Will now run the testMethod through the run() proxy")
+# dont want to run the test method directly, use an proxy
 test.run()
+
+print("Checking that test has run. test.wasRun should be 1:")
+print("test.wasRun is:")
 print(test.wasRun)
