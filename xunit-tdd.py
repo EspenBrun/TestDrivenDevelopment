@@ -1,21 +1,23 @@
 class TestCase:
 	def __init__(self, name):
 		self.name = name
+	def setUp(self):
+		pass
 	def run(self):
+		self.setUp()
 		# This code will attr/method with name 'name'
 		# Fails if we do not have anything named 'name'
-		print("Attempting to find method or attribute named " + self.name)
 		method = getattr(self, self.name)
-		print("Found it: " + self.name + "()")
 		method()
 
 class WasRun(TestCase):
 	'''This is the docstring'''
 	def __init__(self, name):
-		self.wasRun = None
 		TestCase.__init__(self, name)
+	def setUp(self):
+		self.wasRun = None
+		self.wasSetUp = 1
 	def testMethod(self):
-		print("testMethod() was called, setting wasRun = 1")
 		self.wasRun = 1
 
 # TestCaseTest inherits TestCase, so it will have run()
@@ -29,10 +31,14 @@ class WasRun(TestCase):
 # So: We now have an actual test of what we earlier visually verified
 
 class TestCaseTest(TestCase):
+	def setUp(self):
+		self.test = WasRun("testMethod")
 	def testRunning(self):
-		test = WasRun("testMethod")
-		assert(not test.wasRun)
-		test.run()
-		assert(test.wasRun)
+		self.test.run()
+		assert(self.test.wasRun)
+	def testSetUp(self):
+		self.test.run()
+		assert(self.test.wasSetUp)
 
 TestCaseTest("testRunning").run()
+TestCaseTest("testSetUp").run()
