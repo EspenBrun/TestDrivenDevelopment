@@ -9,16 +9,21 @@ class TestCase:
 		# Fails if we do not have anything named 'name'
 		method = getattr(self, self.name)
 		method()
+		self.tearDown()
+	def tearDown(self):
+		pass
 
 class WasRun(TestCase):
 	'''This is the docstring'''
 	def __init__(self, name):
 		TestCase.__init__(self, name)
 	def setUp(self):
-		self.wasRun = None
-		self.wasSetUp = 1
+		self.log = "setUp"
 	def testMethod(self):
-		self.wasRun = 1
+		self.log = self.log + " testMethod"
+	def tearDown(self):
+		self.log = self.log + " tearDown"
+
 
 # TestCaseTest inherits TestCase, so it will have run()
 # Run is the method that dynamically invokes a method
@@ -31,14 +36,9 @@ class WasRun(TestCase):
 # So: We now have an actual test of what we earlier visually verified
 
 class TestCaseTest(TestCase):
-	def setUp(self):
-		self.test = WasRun("testMethod")
-	def testRunning(self):
-		self.test.run()
-		assert(self.test.wasRun)
-	def testSetUp(self):
-		self.test.run()
-		assert(self.test.wasSetUp)
+	def testTemplateMethod(self):
+		test = WasRun("testMethod")
+		test.run()
+		assert("setUp testMethod tearDown" == test.log)
 
-TestCaseTest("testRunning").run()
-TestCaseTest("testSetUp").run()
+TestCaseTest("testTemplateMethod").run()
