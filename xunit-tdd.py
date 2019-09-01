@@ -111,6 +111,11 @@ class TestCaseTest(TestCase):
         suite.run(self.result)
         assert ("2 run, 1 failed" == self.result.summary())
 
+    def tearDownCalledIfFail(self):
+        test = WasRun("testBrokenMethod")
+        test.run(self.result)
+        assert (test.log.__contains__("tearDown"))
+
 
 testSuite = TestSuite()
 testSuite.add(TestCaseTest("testTemplateMethod"))
@@ -118,6 +123,7 @@ testSuite.add(TestCaseTest("testResult"))
 testSuite.add(TestCaseTest("testFailedResultFormatting"))
 testSuite.add(TestCaseTest("testFailedResult"))
 testSuite.add(TestCaseTest("testSuiteTest"))
+testSuite.add(TestCaseTest("tearDownCalledIfFail"))
 testResult = TestResult()
 testSuite.run(testResult)
 print(testResult.summary())
