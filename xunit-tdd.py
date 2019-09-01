@@ -2,6 +2,7 @@ class TestResult:
     def __init__(self):
         self.runCount = 0
         self.errorCount = 0
+        self.errorNames = []
 
     def testStarted(self):
         self.runCount = self.runCount + 1
@@ -9,8 +10,12 @@ class TestResult:
     def summary(self):
         return "%d run, %d failed" % (self.runCount, self.errorCount)
 
-    def testFailed(self):
+    def testFailed(self, name):
+        self.errorNames.append(name)
         self.errorCount += 1
+
+    def failedTests(self):
+        return self.failedTests
 
 
 class TestCase:
@@ -29,7 +34,7 @@ class TestCase:
             method = getattr(self, self.name)
             method()
         except:
-            result.testFailed()
+            result.testFailed(self.name)
         self.tearDown()
 
     def tearDown(self):
@@ -101,7 +106,7 @@ class TestCaseTest(TestCase):
 
     def testFailedResultFormatting(self):
         self.result.testStarted()
-        self.result.testFailed()
+        self.result.testFailed("whatever")
         assert ("1 run, 1 failed" == self.result.summary())
 
     def testSuiteTest(self):
@@ -116,6 +121,18 @@ class TestCaseTest(TestCase):
         test.run(self.result)
         assert (test.log.__contains__("tearDown"))
 
+    def listFailedTests(self):
+        test = WasRun("testBrokenMethod")
+        test.run(self.result)
+        print(self.result.failedTests()[0])
+        assert (self.result.failedTests().__sizeof__() == 1)
+        assert (self.result.failedTests()[0] == "testBrokenMethod")
+
+    def failedTestWithName(self):
+        test = WasRun("testBrokenMethod")
+        test.run(self.result)
+        assert (self.result.summary().__contains__("testBrokenMethod"))
+
 
 testSuite = TestSuite()
 testSuite.add(TestCaseTest("testTemplateMethod"))
@@ -124,6 +141,8 @@ testSuite.add(TestCaseTest("testFailedResultFormatting"))
 testSuite.add(TestCaseTest("testFailedResult"))
 testSuite.add(TestCaseTest("testSuiteTest"))
 testSuite.add(TestCaseTest("tearDownCalledIfFail"))
+testSuite.add(TestCaseTest("listFailedTests"))
+# testSuite.add(TestCaseTest("failedTestWithName"))
 testResult = TestResult()
 testSuite.run(testResult)
 print(testResult.summary())
